@@ -13,7 +13,9 @@ import net.sourceforge.tess4j.TesseractException;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
@@ -30,45 +32,45 @@ public class MainController {
     @FXML
     private Button demo4;
 
-    private static void ProcessVideo() throws FrameGrabber.Exception {
-        String videoPath = "path/to/your/video.mp4";
+    private String ProcessVideo(String vidName) throws FrameGrabber.Exception {
+        String videoPath = "src/main/resources/TestVideos/" + vidName;
 
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
         grabber.start();
 
         OpenCVFrameConverter.ToMat converter = new OpenCVFrameConverter.ToMat();
+        Java2DFrameConverter java2DConverter = new Java2DFrameConverter();
+
+        // Much can be done to improve accuracy, easiest to hardest:
+        // limiting chars to a-z + 1-9, cropping to expected area, and improving processing method
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath("src/main/resources/TessData");
         tesseract.setLanguage("eng");
-        tesseract.setTessVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
         Frame frame;
-        int frameCount = 0;
-        while ((frame = grabber.grabImage()) != null && frameCount < 300) {
+        while ((frame = grabber.grabImage()) != null) {
             Mat mat = converter.convert(frame);
             if (mat == null) continue;
 
             Mat gray = new Mat();
             cvtColor(mat, gray, COLOR_BGR2GRAY);
-
             Mat thresh = new Mat();
             threshold(gray, thresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
-
-            BufferedImage buffered = new Java2DFrameConverter().convert(converter.convert(thresh));
-
+            BufferedImage buffered = java2DConverter.convert(converter.convert(thresh));
             try {
-                String result = tesseract.doOCR(buffered);
-                if (!result.trim().isEmpty()) {
-                    System.out.println("Detected text on frame " + frameCount + ":\n" + result.trim());
+                String result = tesseract.doOCR(buffered).trim();
+                if (!result.isEmpty()) {
+                    grabber.stop();
+                    grabber.close();
+                    return result;
                 }
             } catch (TesseractException e) {
-                System.err.println("OCR failed on frame " + frameCount + ": " + e.getMessage());
+                System.err.println("OCR failed");
             }
-
-            frameCount++;
         }
 
         grabber.stop();
         grabber.close();
+        return ""; // return empty string if no text found
     }
 }
