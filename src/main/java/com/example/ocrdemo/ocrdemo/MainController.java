@@ -2,7 +2,6 @@ package com.example.ocrdemo.ocrdemo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.Button;
 
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.*;
@@ -25,22 +24,22 @@ public class MainController {
 
     @FXML
     private void handleDemo1() {
-        runDemo("4KCarApproachesCamera.mp4");
+        runDemo("Test1.mp4");
     }
 
     @FXML
     private void handleDemo2() {
-        runDemo("4KCarApproachesCameraAngled.mp4");
+        runDemo("Test2.mp4");
     }
 
     @FXML
     private void handleDemo3() {
-        runDemo("4KCarPlateMovesIntoFrame.mp4");
+        runDemo("Test3.mp4");
     }
 
     @FXML
     private void handleDemo4() {
-        runDemo("720pCarApproachingCarParkCamera.mp4");
+        runDemo("Test4.mp4");
     }
 
     private void runDemo(String filename) {
@@ -66,6 +65,7 @@ public class MainController {
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath("src/main/resources/TessData");
         tesseract.setLanguage("eng");
+        tesseract.setTessVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
         Frame frame;
         while ((frame = grabber.grabImage()) != null) {
