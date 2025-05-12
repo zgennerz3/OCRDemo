@@ -40,6 +40,7 @@ public class MainController {
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath("src/main/resources/TessData");
         tesseract.setLanguage("eng");
+        tesseract.setTessVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
         Frame frame;
         int frameCount = 0;
