@@ -12,7 +12,7 @@ public class OCRDemoApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(OCRDemoApp.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
+        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
         stage.setTitle("OCRDemo");
         stage.setScene(scene);
         stage.show();

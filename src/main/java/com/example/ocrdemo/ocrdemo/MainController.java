@@ -38,7 +38,7 @@ public class MainController {
 
     @FXML
     private void handleDemo2() {
-        runDemo("4KCarApprochesCameraAngled.mov");
+        runDemo("4KCarApprochesCameraAngled.mp4");
     }
 
     @FXML
@@ -48,7 +48,7 @@ public class MainController {
 
     @FXML
     private void handleDemo4() {
-        runDemo("720pCarApproachingCarParkCamera.mov");
+        runDemo("720pCarApproachingCarParkCamera.mp4");
     }
 
     private void runDemo(String filename) {
