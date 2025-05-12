@@ -38,7 +38,7 @@ public class MainController {
 
     @FXML
     private void handleDemo2() {
-        runDemo("4KCarApprochesCameraAngled.mp4");
+        runDemo("4KCarApproachesCameraAngled.mp4");
     }
 
     @FXML
