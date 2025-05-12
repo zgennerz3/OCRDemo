@@ -10,6 +10,7 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 import java.awt.image.BufferedImage;
+import java.util.regex.*;
 
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
@@ -29,7 +30,20 @@ public class MainController {
 
     @FXML
     private void handleDemo2() {
-        runDemo("Test2.mp4");
+        try {
+            String result = ProcessVideo("Test2.mp4");
+
+            String pattern = "([A-Z][A-Z][A-Z][0-9][0-9][0-9])";
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(result);
+            if (m.find()) {
+                result = m.group(1); // gets the matched substring
+            }
+
+            resultText.setText(result.isEmpty() ? "No text detected" : result);
+        } catch (Exception e) {
+            resultText.setText("Error: " + e.getMessage());
+        }
     }
 
     @FXML
