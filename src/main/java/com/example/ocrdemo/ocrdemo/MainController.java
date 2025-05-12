@@ -6,18 +6,12 @@ import javafx.scene.control.Button;
 
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.*;
-import org.bytedeco.opencv.opencv_imgproc.*;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
-import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 public class MainController {
@@ -31,6 +25,40 @@ public class MainController {
     private Button demo3;
     @FXML
     private Button demo4;
+
+    @FXML
+    public void initialize() {
+        resultText.setText("Please select a demo");
+    }
+
+    @FXML
+    private void handleDemo1() {
+        runDemo("4KCarApproachesCamera.mov");
+    }
+
+    @FXML
+    private void handleDemo2() {
+        runDemo("4KCarApprochesCameraAngled.mov");
+    }
+
+    @FXML
+    private void handleDemo3() {
+        runDemo("4KCarPlateMovesIntoFrame.mov");
+    }
+
+    @FXML
+    private void handleDemo4() {
+        runDemo("720pCarApproachingCarParkCamera.mov");
+    }
+
+    private void runDemo(String filename) {
+        try {
+            String result = ProcessVideo(filename);
+            resultText.setText(result.isEmpty() ? "No text detected" : result);
+        } catch (Exception e) {
+            resultText.setText("Error: " + e.getMessage());
+        }
+    }
 
     private String ProcessVideo(String vidName) throws FrameGrabber.Exception {
         String videoPath = "src/main/resources/TestVideos/" + vidName;
@@ -65,7 +93,7 @@ public class MainController {
                     return result;
                 }
             } catch (TesseractException e) {
-                System.err.println("OCR failed");
+                resultText.setText("OCR failed!");
             }
         }
 
