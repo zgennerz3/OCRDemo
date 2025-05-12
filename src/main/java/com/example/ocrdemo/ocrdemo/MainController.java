@@ -17,14 +17,6 @@ import static org.bytedeco.opencv.global.opencv_imgproc.*;
 public class MainController {
     @FXML
     private Label resultText;
-    @FXML
-    private Button demo1;
-    @FXML
-    private Button demo2;
-    @FXML
-    private Button demo3;
-    @FXML
-    private Button demo4;
 
     @FXML
     public void initialize() {
@@ -33,7 +25,7 @@ public class MainController {
 
     @FXML
     private void handleDemo1() {
-        runDemo("4KCarApproachesCamera.mov");
+        runDemo("4KCarApproachesCamera.mp4");
     }
 
     @FXML
@@ -43,7 +35,7 @@ public class MainController {
 
     @FXML
     private void handleDemo3() {
-        runDemo("4KCarPlateMovesIntoFrame.mov");
+        runDemo("4KCarPlateMovesIntoFrame.mp4");
     }
 
     @FXML
