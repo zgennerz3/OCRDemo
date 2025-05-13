@@ -3,6 +3,7 @@ package com.example.ocrdemo.ocrdemo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.*;
 
@@ -12,6 +13,7 @@ import net.sourceforge.tess4j.TesseractException;
 import java.awt.image.BufferedImage;
 import java.util.regex.*;
 
+import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 public class MainController {
@@ -82,6 +84,7 @@ public class MainController {
         tesseract.setDatapath("src/main/resources/TessData");
         tesseract.setLanguage("eng");
         tesseract.setTessVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+        tesseract.setPageSegMode(7); // sets image as single line of text
 
         Frame frame;
         while ((frame = grabber.grabImage()) != null) {
@@ -92,7 +95,17 @@ public class MainController {
             cvtColor(mat, gray, COLOR_BGR2GRAY);
             Mat thresh = new Mat();
             threshold(gray, thresh, 0, 255, THRESH_BINARY | THRESH_OTSU);
-            BufferedImage buffered = java2DConverter.convert(converter.convert(thresh));
+            Mat kernel = new Mat(3, 3, CV_32F, new FloatPointer(
+                    0, -1,  0,
+                    -1,  5, -1,
+                    0, -1,  0
+            ));
+
+            Mat sharpened = new Mat();
+            filter2D(thresh, sharpened, thresh.depth(), kernel);
+
+            Frame sharpenedFrame = converter.convert(sharpened);
+            BufferedImage buffered = java2DConverter.convert(sharpenedFrame);
             try {
                 String result = tesseract.doOCR(buffered).trim();
                 if (!result.isEmpty()) {
