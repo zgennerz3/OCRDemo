@@ -32,17 +32,19 @@ public class MainController {
     private void handleDemo2() {
         try {
             String result = ProcessVideo("Test2.mp4");
-
-            String pattern = "([A-Z][A-Z][A-Z][0-9][0-9][0-9])";
-            Pattern r = Pattern.compile(pattern);
-            Matcher m = r.matcher(result);
-            if (m.find()) {
-                result = m.group(1); // gets the matched substring
-            }
-
             resultText.setText(result.isEmpty() ? "No text detected" : result);
         } catch (Exception e) {
             resultText.setText("Error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void refineDemo2() {
+        String pattern = "([A-Z][A-Z][A-Z][0-9][0-9][0-9])";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(resultText.getText());
+        if (m.find()) {
+            resultText.setText(m.group(1));
         }
     }
 
