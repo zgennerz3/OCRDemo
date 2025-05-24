@@ -19,5 +19,4 @@
     <Button text="demo3" onAction="#handleDemo3"/>
     <Button text="demo4" onAction="#handleDemo4"/>
   </HBox>
-  <Button text="refine" onAction="#refineDemo2"/>
 </VBox>
