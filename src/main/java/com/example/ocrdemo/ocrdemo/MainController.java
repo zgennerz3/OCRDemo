@@ -37,12 +37,12 @@ public class MainController {
 
     @FXML
     private void handleDemo3() {
-        runDemo("Test3.mp4", "[0-9][0-9][A-Z][A-Z][A-Z][A-Z]");
+        runDemo("Test3.mp4", ".+");
     }
 
     @FXML
     private void handleDemo4() {
-        runDemo("Test4.mp4", "[0-9][0-9][A-Z][A-Z][A-Z][A-Z]");
+        runDemo("Test4.mp4", ".+");
     }
 
     private void runDemo(String filename, String plateRegex) {
@@ -71,7 +71,7 @@ public class MainController {
         Pattern plateFormat = Pattern.compile(plateRegex);
         Map<String, Integer> plateCounts = new HashMap<>();
         int frameCount = 0;
-        int frameSkip = 4;
+        int frameSkip = 3;
 
         Frame frame;
         while ((frame = grabber.grabImage()) != null) {
@@ -104,6 +104,7 @@ public class MainController {
 
         grabber.stop();
         grabber.close();
+        System.out.println("Detected plates and counts: " + plateCounts);
 
         if (!plateCounts.isEmpty()) {
             return plateCounts.entrySet().stream().max(Map.Entry.comparingByValue())
