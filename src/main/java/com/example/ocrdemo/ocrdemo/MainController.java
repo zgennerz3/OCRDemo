@@ -37,7 +37,7 @@ public class MainController {
 
     @FXML
     private void handleDemo3() {
-        runDemo("Test3.mp4", ".+");
+        runDemo("Test3.mp4", "[A-Z][A-Z][A-Z][0-9][0-9][0-9]");
     }
 
     @FXML
