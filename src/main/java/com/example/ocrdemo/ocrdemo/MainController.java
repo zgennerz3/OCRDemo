@@ -47,7 +47,7 @@ public class MainController {
 
     @FXML
     private void handleDemo5() {
-        runDemo("Test5.mp4", "[A-Z][A-Z][A-Z][0-9][0-9][0-9]");
+        runDemo("Test5.mp4", ".+");
     }
 
     private void runDemo(String filename, String plateRegex) {
@@ -66,8 +66,6 @@ public class MainController {
         OpenCVFrameConverter.ToMat converter = new OpenCVFrameConverter.ToMat();
         Java2DFrameConverter java2DConverter = new Java2DFrameConverter();
 
-        // Much can be done to improve accuracy, easiest to hardest:
-        // limiting chars to a-z + 1-9, cropping to expected area, and improving processing method
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath("src/main/resources/TessData");
         tesseract.setLanguage("eng");
@@ -76,7 +74,7 @@ public class MainController {
         Pattern plateFormat = Pattern.compile(plateRegex);
         Map<String, Integer> plateCounts = new HashMap<>();
         int frameCount = 0;
-        int frameSkip = 3;
+        int frameSkip = 6;
 
         Frame frame;
         while ((frame = grabber.grabImage()) != null) {
