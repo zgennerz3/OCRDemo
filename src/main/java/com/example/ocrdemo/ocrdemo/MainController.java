@@ -45,6 +45,11 @@ public class MainController {
         runDemo("Test4.mp4", ".+");
     }
 
+    @FXML
+    private void handleDemo5() {
+        runDemo("Test5.mp4", "[A-Z][A-Z][A-Z][0-9][0-9][0-9]");
+    }
+
     private void runDemo(String filename, String plateRegex) {
         try {
             String result = ProcessVideo(filename, plateRegex);

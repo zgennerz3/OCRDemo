@@ -18,5 +18,6 @@
     <Button text="demo2" onAction="#handleDemo2"/>
     <Button text="demo3" onAction="#handleDemo3"/>
     <Button text="demo4" onAction="#handleDemo4"/>
+    <Button text="demo5" onAction="#handleDemo5"/>
   </HBox>
 </VBox>
