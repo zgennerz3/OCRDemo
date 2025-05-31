@@ -3,6 +3,9 @@ package com.example.ocrdemo.ocrdemo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.*;
 
@@ -10,6 +13,7 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.*;
@@ -50,8 +54,27 @@ public class MainController {
         runDemo("Test5.mp4", ".+");
     }
 
+    @FXML
+    private MediaView video;
+    private MediaPlayer mediaPlayer;
+
+
+    private void playVideo(String filename){
+        String videoPath = "src/main/resources/TestVideos/" + filename;
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+        }
+
+        Media media = new Media(new File(videoPath).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setMute(true);
+        video.setMediaPlayer(mediaPlayer);
+        mediaPlayer.play();
+    }
+
     private void runDemo(String filename, String plateRegex) {
         try {
+            playVideo(filename);
             String result = ProcessVideo(filename, plateRegex);
             resultText.setText(result.isEmpty() ? "No text detected" : result);
         } catch (Exception e) {
