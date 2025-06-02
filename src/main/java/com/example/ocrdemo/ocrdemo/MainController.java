@@ -107,7 +107,7 @@ public class MainController {
 
         grabber.stop();
         grabber.close();
-        System.out.println("Detected plates and counts: " + plateCounts);
+        System.out.println("Detected plates: " + plateCounts);
 
         if (!plateCounts.isEmpty()) {
             return plateCounts.entrySet().stream().max(Map.Entry.comparingByValue())
