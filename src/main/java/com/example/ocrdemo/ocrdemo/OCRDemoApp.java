@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static org.bytedeco.ffmpeg.global.avutil.AV_LOG_QUIET;
+import static org.bytedeco.ffmpeg.global.avutil.av_log_set_level;
+import org.bytedeco.javacv.FFmpegLogCallback;
+
 
 public class OCRDemoApp extends Application {
     @Override
@@ -19,6 +23,8 @@ public class OCRDemoApp extends Application {
     }
 
     public static void main(String[] args) {
+        FFmpegLogCallback.set();           // Required for log redirection
+        av_log_set_level(AV_LOG_QUIET);
         launch();
     }
 }

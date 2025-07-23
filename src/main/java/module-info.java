@@ -6,6 +6,7 @@ module com.example.ocrdemo.ocrdemo {
     requires tess4j;
     requires java.desktop;
     requires javafx.media;
+    requires org.bytedeco.ffmpeg;
 
 
     opens com.example.ocrdemo.ocrdemo to javafx.fxml;

@@ -31,27 +31,27 @@ public class MainController {
 
     @FXML
     private void handleDemo1() {
-        runDemo("Test1.mp4", "[0-9][0-9][A-Z][A-Z][A-Z][A-Z]");
+        runDemo("Test1.mp4", "[A-Z][A-Z][0-9][0-9][A-Z][A-Z]");
     }
 
     @FXML
     private void handleDemo2() {
-        runDemo("Test2.mp4", "[A-Z][A-Z][A-Z][0-9][0-9][0-9]");
+        runDemo("Test2.mp4", "[0-9][0-9][0-9][A-Z][A-Z][A-Z]");
     }
 
     @FXML
     private void handleDemo3() {
-        runDemo("Test3.mp4", "[A-Z][A-Z][A-Z][0-9][0-9][0-9]");
+        runDemo("Test3.mp4", "[0-9][0-9][0-9][A-Z][A-Z][A-Z]");
     }
 
     @FXML
     private void handleDemo4() {
-        runDemo("Test4.mp4", ".+");
+        runDemo("Test4.mp4", "[0-9][0-9][0-9][A-Z][A-Z][A-Z]");
     }
 
     @FXML
     private void handleDemo5() {
-        runDemo("Test5.mp4", ".+");
+        runDemo("Test5.mp4", "[A-Z][A-Z][0-9][0-9][A-Z][A-Z]");
     }
 
     @FXML
