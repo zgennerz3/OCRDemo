@@ -23,7 +23,7 @@ public class OCRDemoApp extends Application {
     }
 
     public static void main(String[] args) {
-        FFmpegLogCallback.set();           // Required for log redirection
+        FFmpegLogCallback.set();
         av_log_set_level(AV_LOG_QUIET);
         launch();
     }

@@ -95,9 +95,10 @@ public class MainController {
         tesseract.setTessVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
         Pattern plateFormat = Pattern.compile(plateRegex);
+        Map<String, Integer> raws = new HashMap<>();
         Map<String, Integer> plateCounts = new HashMap<>();
         int frameCount = 0;
-        int frameSkip = 6;
+        int frameSkip = 4;
 
         Frame frame;
         while ((frame = grabber.grabImage()) != null) {
@@ -115,6 +116,8 @@ public class MainController {
             BufferedImage buffered = java2DConverter.convert(converter.convert(thresh));
             try {
                 String result = tesseract.doOCR(buffered).trim();
+                String raw = result.replaceAll("[\\r\\n]", "");
+                raws.put(raw, plateCounts.getOrDefault(result, 0) + 1);
                 if (!result.isEmpty()) {
                     Matcher matcher = plateFormat.matcher(result);
                     while (matcher.find()) {
@@ -130,6 +133,7 @@ public class MainController {
 
         grabber.stop();
         grabber.close();
+        System.out.println("Raw OCR: " + raws);
         System.out.println("Detected plates: " + plateCounts);
 
         if (!plateCounts.isEmpty()) {
